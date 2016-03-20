@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Portada | Cupon {% endblock %}
+
+
+{% block body %}
+    <div class = "container">
+        <div class = "row">
+            {# verifica si se paso una oferta, es decir si la oferta ha sido revisada #}
+            {% if oferta is null %}
+                <p class = "center-align">No existen oferta del dia en esta ciudad</p>
+            {% else %}
+                {% include "AppBundle:default/include:oferta.html.twig" %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

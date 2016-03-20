@@ -1,0 +1,48 @@
+
+header, footer {
+    padding-left: 0px;
+}
+
+.top-nav1 {
+    line-height: 64px;
+}
+
+a.button-collapse.top-nav1.full {
+    line-height: 64px;
+}
+
+
+/*Contenido de la pagina**/
+
+@media only screen and (max-width: 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+
+.salir:hover {
+    background-color: #c62828;
+
+}
+
+.ayuda:hover {
+    background-color: #00C853;
+}
+
+.nav-wrapper .right .dropdown-button:hover {
+    background-color: transparent;
+}
+
+
+.input-field div.error{
+    position: relative;
+    top: -1rem;
+    left: 0rem;
+    font-size: 0.8rem;
+    color:#FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}

@@ -1,0 +1,5 @@
+<ul id="dropdown"  class="dropdown-content">
+    {% for ciudad in ciudades %}
+        <li><a href="{{ path('cambiar-a',{'ciudad':  ciudad.ficha}) }}">{{ ciudad.nombre }}</a></li>
+    {% endfor %}
+</ul>

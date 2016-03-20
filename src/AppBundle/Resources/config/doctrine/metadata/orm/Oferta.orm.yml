@@ -1,0 +1,123 @@
+Oferta:
+    type: entity
+    table: oferta
+    indexes:
+        tienda_idx:
+            columns:
+                - tienda_id
+        ciudad_idx:
+            columns:
+                - ciudad_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        ficha:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        descripcion:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+        condiciones:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        precio:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 2
+        descuento:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 2
+        fechaPublicacion:
+            type: datetime
+            nullable: true
+            column: fecha_publicacion
+        fechaExpiracion:
+            type: datetime
+            nullable: true
+            column: fecha_expiracion
+        compras:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        umbral:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        revisada:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        foto:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+    manyToOne:
+        tienda:
+            targetEntity: Tienda
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tienda_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        ciudad:
+            targetEntity: Ciudad
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ciudad_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        usuario:
+            targetEntity: Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: oferta
+            joinTable:
+                name: venta
+                joinColumns:
+                    -
+                        name: oferta_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: usuario_id
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

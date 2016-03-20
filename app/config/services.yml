@@ -1,0 +1,26 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+# Servicios para las plantillas Twig text me ofrece para truncar palabras a una cierta longitud
+  twig.extension.text:
+      class: Twig_Extensions_Extension_Text
+      tags:
+          - { name: twig.extension }
+
+#debug me permite agregar dump que muestra el contenido de una variable
+  twig.extension.debug:
+          class: Twig_Extension_Debug
+          tags:
+              - { name: twig.extension }
+
+  twig.extension.cupon:
+         class: AppBundle\Twig\Extension\CuponExtension
+         tags:
+             - { name: twig.extension }

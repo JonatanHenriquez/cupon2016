@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title%}
+    Ofertas Recientes en {{ ciudad.nombre }}
+{% endblock%}
+
+{% block body%}
+    <div class="container" id="recientes">
+        <div class="row">
+            <div class="col s12 m12 l10">
+                <h3 class="left-align">Ofertas Recientes en <strong> {{ ciudad.nombre }}:</strong></h3>
+                {% for oferta in ofertas %}
+                    {% include 'AppBundle:default/include:minioferta.html.twig' %}
+                    <div class="divider"></div>
+                    {%  else %}
+                    <p>Esta ciudad no tiene ofertas publicadas</p>
+                {% endfor %}
+            </div>
+
+            <div class="col s12 m12 l2 center-align">
+                <div class="section">
+                    <h4>Ofertas en otras ciudades</h4>
+                    <ul>
+                        {% for lugar in cercanas %}
+                            <li><a href="{{ path('recientes', { 'ciudad': lugar.ficha })}}"> {{ lugar.nombre }}</a> </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock%}
+
+{% block javascript%}
+
+{% endblock%}
+

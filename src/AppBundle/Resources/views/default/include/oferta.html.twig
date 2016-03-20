@@ -1,0 +1,110 @@
+
+{# Plantilla en comun de la portada y de detalle oferta que contiene la descripcion de la oferta#}
+
+{% set expirada = oferta.fechaExpiracion | date('YmdHis','America/El_Salvador') < 'now' | date('YmdHis','America/El_Salvador') %}
+
+<div class = "oferta col s12 m12 l9">
+    <div class = "row">
+        <div class = "col s12 m12 l6">
+            <div class = "section descripcion ">
+                <h4 class = "center-align"><a
+                            href = "{{ path('detalles_oferta', {'ciudad': oferta.ciudad.ficha, 'ficha': oferta.ficha}) }}">{{ oferta.nombre }}</a>
+                </h4>
+                {{ oferta.descripcion | mostrar_como_lista }}<br>
+            </div>
+
+            {% if not expirada %}
+                <div class = "row center-align">
+                    <a class = " waves-light waves-teal btn " href = "#">Comprar</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class = "col s12 m12 l6">
+            <div class = " section galeria" align = "center">
+                <img class = "materialboxed" height = "150px" alt = "Fotografia de la oferta"
+                     data-caption = "Unos quesos deliciosos"
+                     src = "{{ asset('uploads/images/' ~ oferta.foto ) }}">
+
+                <div>
+                    <p class = "precio"><strong>Precio: </strong>&dollar; {{ oferta.precio }}
+                        <span> <strong>Descuento: </strong>{{ descuento( oferta.precio, oferta.descuento) }}</span></p>
+                    <p><strong>Condiciones: </strong> {{ oferta.condiciones }} </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class = "section estado {{ expirada? 'expirada' : '' }}">
+        {# si aun no ha expirado, en este caso pregunta es no false #}
+        {% if not expirada %}
+            <div class = "row valign-wrapper z-depth-1-half" style = "border: black solid 1px">
+                <div class = "col s12 m12 l3">
+                <span><strong>Faltan:</strong>
+                <div data-countdown = "{{ oferta.fechaExpiracion | date('m/d/Y', 'America/El_Salvador') }}">
+                    <!--<strong id=""></strong>-->{#{{ oferta.fechaExpiracion | cuenta_atras }}#}
+                </div>
+                    </span>
+                </div>
+
+                <div class = "col s12 m12 l3">
+                    <div class = "compras">
+                        <strong>Compras</strong>: {{ oferta.compras }}
+                    </div>
+                </div>
+
+                <div class = "col s12 m12 l3">
+                    <div class = "faltan">
+                        {# Si las compras no llegan al umbral minimo establecido#}
+                        {% set faltan = oferta.umbral - oferta.compras %}
+                        {% if faltan > 0 %}
+                            Faltan: <strong>{{ faltan }} compras </strong> para activar la oferta
+                        {% else %}
+                            {# Si las compras superan el umbral minimo establecido #}
+                            <strong>Oferta activada</strong> por superar las
+                            <strong> {{ oferta.umbral }} </strong> compras necesarias
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class = "tiempo">
+                <strong>Finalizada</strong> el {{ oferta.fechaExpiracion | date() }}
+            </div>
+            <div class = "compras">
+                <strong>Compras</strong> {{ oferta.compras }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class = "divider"></div>
+    <div class = "section direccion row">
+        <div class = "col s12 m12 l6">
+            <h4>Disfruta de la oferta en</h4>
+            <p>
+                {# Muestra la descripcion de la tienda en varias lineas cortas de longitud 40 caracteres y despues se añade el separador#}
+                {# oferta.tienda.ciudad.ficha con esto obtengo la tienda a la que pertenece esa oferta luego accedo en que ciudad esta ubicada para al final obtener su ficha
+                        y asi ya forme bien la url
+                        #}
+                <a href = "{{ path("tienda_portada", { 'ciudad': oferta.tienda.ciudad.ficha, 'tienda': oferta.tienda.ficha } ) }}">{{ oferta.tienda.nombre }}</a> {{ oferta.tienda.direccion }}
+            </p>
+        </div>
+        <div class = "col s12 m12 l6">
+            <h4>Sobre la tienda</h4> {{ oferta.tienda.descripcion }}
+        </div>
+    </div>
+</div>
+
+<script>
+    $('[data-countdown]').each(function () {
+        var $this = $(this), finalDate = $(this).data('countdown');
+        $this.countdown(finalDate, function (event) {
+            var faltan = "Faltan: ";
+            var totalHoras = event.offset.totalDays * 24 + event.offset.hours;
+            $this.html(event.strftime(totalHoras + ' horas %M min %S seg'));
+        });
+    });
+</script>
+

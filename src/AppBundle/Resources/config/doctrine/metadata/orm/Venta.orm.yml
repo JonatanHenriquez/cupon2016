@@ -1,0 +1,32 @@
+Venta:
+    type: entity
+    table: venta
+    indexes:
+        oferta_idx:
+            columns:
+                - oferta_id
+        usuario_idx:
+            columns:
+                - usuario_id
+    id:
+        ofertaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'relación 1:n, parte de la clave primaria compuesta'
+            id: true
+            column: oferta_id
+        usuarioId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'relación 1:n, parte de la clave primaria compuesta'
+            id: true
+            column: usuario_id
+    fields:
+        fecha:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }

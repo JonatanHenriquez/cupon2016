@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Tienda {{ tienda.nombre }}
+{% endblock %}
+
+{% block body %}
+    <div class = "container">
+        <div class = "row">
+            <div class = "col s12 m12 l9">
+                <div class = "section">
+                    <h1>{{ tienda.nombre }}</h1>
+                    <p>{{ tienda.descripcion | mostrar_como_lista }}</p>
+                </div>
+
+                <div class = "section">
+                    <h2>Ultimas Ofertas Publicadas</h2>
+                    <table class = "striped highlight centered responsive-table">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Oferta</th>
+                            <th>Precio</th>
+                            <th>Descuento</th>
+                            <th>Compras</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for oferta in ofertas %}
+                            <tr>
+                                <td>{{ oferta.fechaPublicacion | date('d/m/y') }}</td>
+                                <td>
+                                    <a href = "{{ path('detalles_oferta', {'ciudad': oferta.ciudad.ficha, 'ficha': oferta.ficha }) }}">{{ oferta.nombre }}</a>
+                                </td>
+                                <td>&dollar; {{ oferta.precio }}</td>
+                                <td>{{ descuento(oferta.precio, oferta.descuento) }}</td>
+                                <td>{{ oferta.compras }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class = "col m12 s12 l3">
+                <div class = "section">
+                    <h2>Otras tiendas en {{ tienda.ciudad.nombre }}</h2>
+                    <ul>
+                        {% for tienda in cercanas %}
+                            <li>
+                                <a href = "{{ path('tienda_portada', { 'ciudad': tienda.ciudad.ficha, 'tienda': tienda.ficha }) }}">{{ tienda.nombre }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
+

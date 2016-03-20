@@ -1,0 +1,27 @@
+<h2>Accede a tu cuenta</h2>
+
+<form action="{{ path('login_check') }}" method="post">
+    {% if error is defined%}
+        <div>{{ error.message }}</div>
+    {% endif %}
+    <div class = "row ">
+        <div class = "input-field col s12">
+            <i class = "mdi-social-person-outline prefix"></i>
+            <input id = "login_user" name="_username" type = "text" value="{{ last_username | default('') }}">
+            <label for = "login_user">Nombre de usuario</label>
+        </div>
+    </div>
+    <div class = "row margin">
+        <div class = "input-field col s12">
+            <i class = "mdi-action-lock-outline prefix"></i>
+            <input id = "login_password" type = "password" name="_password">
+            <label for = "login_password">Contraseña</label>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "input-field col s12">
+            <a href = "index.html" class = "btn waves-effect waves-light col s12">Ingresar</a>
+        </div>
+    </div>
+
+</form>

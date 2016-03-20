@@ -1,0 +1,111 @@
+Usuario:
+    type: entity
+    table: usuario
+    indexes:
+        ciudad_idx:
+            columns:
+                - ciudad_id
+        rol_idx:
+            columns:
+                - rol
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+        apellidos:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        email:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        direccion:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+        permiteEmail:
+            type: boolean
+            nullable: true
+            column: permite_email
+        fechaAlta:
+            type: datetime
+            nullable: true
+            column: fecha_alta
+        fechaNacimiento:
+            type: datetime
+            nullable: true
+            column: fecha_nacimiento
+        dui:
+            type: string
+            nullable: true
+            length: 9
+            options:
+                fixed: false
+        numeroTarjeta:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+            column: numero_tarjeta
+        estado:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        ciudad:
+            targetEntity: Ciudad
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ciudad_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        rol:
+            targetEntity: Rol
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rol:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        oferta:
+            targetEntity: Oferta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: usuario
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

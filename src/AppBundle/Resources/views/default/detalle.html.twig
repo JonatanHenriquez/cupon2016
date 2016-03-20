@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ oferta.nombre }}{% endblock %}
+
+{% block body %}
+    <div class = "container">
+        <div class = "row">
+            {% include "AppBundle:default/include:oferta.html.twig" %}
+
+            <div class="col s12 m12 l3">
+                <div class="">
+                    <h2>Ofertas de otras ciudades</h2>
+                    <ul>
+                        {% for oferta in relacionadas %}
+                            <li>{{ oferta.ciudad.nombre }}: <a href="{{ path('detalles_oferta', {'ciudad': oferta.ciudad.ficha, 'ficha': oferta.ficha}) }}">{{ oferta.nombre }}</a> </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+
+
