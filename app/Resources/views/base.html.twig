@@ -82,7 +82,8 @@
                                     del dia</a></li>
                             <li><a href = "#"><i class = "material-icons left">sms_failed</i>Ofertas Recientes</a></li>
                             <li><a href = "#"><i class = "material-icons left">add_shopping_cart</i>Mis Ofertas</a></li>
-                            {% if is_granted('ROLE_USUARIO') %}
+
+                            {% if is_granted('ROLE_USUARIO') or is_granted('ROLE_ADMINISTRADOR') %}
                             <li class="no-padding">
                                 <ul class="collapsible collapsible-accordion">
                                     <li>
