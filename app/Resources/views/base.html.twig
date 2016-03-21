@@ -30,7 +30,6 @@
         <!--Contador-->
         <script src = "{{ asset('libs/countdown/jquery.countdown.min.js') }}"></script>
     {% endblock %}
-
 </head>
 
 <body>
@@ -57,16 +56,23 @@
                     <div class = "container">
                         <a class = "brand-logo" href = "{{ path('homepage') }}">Cupon</a>
                         <ul class = "right hide-on-med-and-down hide-on-small-and-down">
-                            <li><a href = "{{ path('homepage') }}"><i class = "material-icons left">event</i>Oferta del
+                            <li><a  href = "{{ path('homepage') }}" >Oferta del
                                     dia</a></li>
-                            <li><a href = "{{ path('recientes', {'ciudad': ciudadSeleccionada}) }}"><i
-                                            class = "material-icons left">sms_failed</i>Ofertas Recientes</a></li>
-                            <li><a href = "{{ path('compras') }}"><i class = "material-icons left">add_shopping_cart</i>Mis
+                            <li><a href = "{{ path('recientes', {'ciudad': ciudadSeleccionada}) }}">Ofertas Recientes</a></li>
+                            <li><a href = "{{ path('compras') }}">Mis
                                     Ofertas</a></li>
                             <li><a class = "dropdown-button tooltipped" data-position = "bottom" data-delay = "50"
                                    data-tooltip = "Ofertas del dia en otras ciudades" href = "#!"
                                    data-activates = "dropdown">Seleccione una ciudad<i class = "material-icons right">arrow_drop_down</i></a>
                             </li>
+                            {% if is_granted('ROLE_USUARIO') %}
+                                <li><a class = "dropdown-buttonUsuario" data-position = "bottom" data-delay = "50"
+                                       href = "#!"
+                                       data-activates = "dropdownUsuario"><i class = "material-icons left">account_circle</i>{{ app.user.nombre ~ ' ' ~ app.user.apellidos }}
+                                    </a>
+                                </li>
+
+                            {% endif %}
                         </ul>
 
                         <!--SideNav!-->
@@ -76,7 +82,27 @@
                                     del dia</a></li>
                             <li><a href = "#"><i class = "material-icons left">sms_failed</i>Ofertas Recientes</a></li>
                             <li><a href = "#"><i class = "material-icons left">add_shopping_cart</i>Mis Ofertas</a></li>
+                            {% if is_granted('ROLE_USUARIO') %}
+                            <li class="no-padding">
+                                <ul class="collapsible collapsible-accordion">
+                                    <li>
+                                        <a class="collapsible-header waves-effect waves-teal"><i class="material-icons left">account_circle</i>{{ app.user.nombre ~ ' ' ~ app.user.apellidos }}</a>
+                                        <div class="collapsible-body">
+                                            <ul>
+                                                <li><a href="#!" style="background-color: transparent">Ver mi Perfil</a></li>
+                                                <li><a href="{{ path('logout') }}" style="background-color: transparent">Cerrar Sesion</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% endif %}
 
+                        </ul>
+
+                        <ul id = "dropdownUsuario" class = "dropdown-content">
+                            <li><a href = "#">Ver mi perfil</a></li>
+                            <li><a href = "{{ path('logout') }}">Cerrar Sesion</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,14 +119,15 @@
     </header>
 {% endblock %}
 
-<main style = "padding-left: 0">
+<main style = "padding-left: 0" class = "container">
+
     {% block body %}{% endblock %}
 
 </main>
 
 {% block footer %}
 
-    <footer class = "page-footer blue accent-1" style = "margin-top: 40px; padding-top: 40px">
+    <footer class = "page-footer blue accent-1">
         <div class = "container">
             <div class = "row">
                 <div class = "col l6 s12">
@@ -140,7 +167,15 @@
     <script>
         $(document).ready(function () {
             $(".button-collapse").sideNav();
-            $(".dropdown-button").dropdown();
+            $(".dropdown-button").dropdown({
+                belowOrigin: true,
+            });
+            $('.dropdown-buttonUsuario').dropdown({
+                        hover: true,
+                        belowOrigin: true, // Displays dropdown below the button
+
+                    }
+            );
         });
     </script>
 {% endblock %}

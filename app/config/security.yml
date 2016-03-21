@@ -20,15 +20,20 @@ security:
             anonymous: ~
         frontend:
             pattern: ^/*
+            ## con anonymous hacemos que todas las url sean publicas
+            anonymous: ~
             security: true
             provider: users_db
             form_login:
                 login_path: login
                 check_path: login_check
-                default_target_path: homepage
+                default_target_path: compras
             logout:
                 path: /logout
                 target: login
+            remember_me:
+                secret: cupon1234
+                lifetime: 3600 ##tiempo que permanecera activa la sesion lo normal es un año
 
 
     access_control:

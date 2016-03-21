@@ -14,6 +14,17 @@ services:
       tags:
           - { name: twig.extension }
 
+  # Servicio para redirigir al usuario a la portada de su ciudad,ya que con el firewall no lo podia hacer
+  login_listener:
+      class: AppBundle\Listener\LoginListener
+      # Acceder al enrutamiento de la app
+      arguments: ["@router"]
+      tags:
+          # Es el evento que se genera al loguearse
+          - { name: kernel.event_listener, event: security.interactive_login }
+          # Para poder redirigir al usuario se requiere este evento
+          - { name: kernel.event_listener, event: kernel.response }
+
 #debug me permite agregar dump que muestra el contenido de una variable
   twig.extension.debug:
           class: Twig_Extension_Debug

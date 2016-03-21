@@ -3,7 +3,7 @@
 
 {% set expirada = oferta.fechaExpiracion | date('YmdHis','America/El_Salvador') < 'now' | date('YmdHis','America/El_Salvador') %}
 
-<div class = "oferta col s12 m12 l9">
+<div class = "oferta container">
     <div class = "row">
         <div class = "col s12 m12 l6">
             <div class = "section descripcion ">
@@ -70,11 +70,20 @@
                 </div>
             </div>
         {% else %}
-            <div class = "tiempo">
-                <strong>Finalizada</strong> el {{ oferta.fechaExpiracion | date() }}
-            </div>
-            <div class = "compras">
-                <strong>Compras</strong> {{ oferta.compras }}
+            <div class = "row valign-wrapper z-depth-1-half " style = "border: black solid 1px; padding: 2px 0 2px 0 ">
+                <div class="col s12 m12 l6 center">
+                    <div class = "tiempo">
+                        <strong>Finalizada</strong> el {{ oferta.fechaExpiracion | date('d/m/Y') }}
+                    </div>
+                </div>
+                <div class="col s12 m12 l6 center">
+                    <div class = "compras">
+                        <strong>Compras</strong> {{ oferta.compras }}
+                    </div>
+                </div>
+
+
+
             </div>
         {% endif %}
     </div>

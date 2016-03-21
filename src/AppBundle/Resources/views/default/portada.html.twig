@@ -2,16 +2,26 @@
 
 {% block title %} Portada | Cupon {% endblock %}
 
-
 {% block body %}
-    <div class = "container">
-        <div class = "row">
+
+    <div class = "row">
+        <div {% if is_granted('ROLE_USUARIO') %} class = "col s12 m12 l12" {% else %}class = "col s12 m12 l9" {% endif %} >
             {# verifica si se paso una oferta, es decir si la oferta ha sido revisada #}
             {% if oferta is null %}
                 <p class = "center-align">No existen oferta del dia en esta ciudad</p>
             {% else %}
+                <h3>Oferta del dia de: {{ oferta.ciudad.nombre }}</h3>
                 {% include "AppBundle:default/include:oferta.html.twig" %}
             {% endif %}
         </div>
+        {# Si el usuario no se ha logueado con cualquie rol se muestra el cajetin de login #}
+        {% if not is_granted('ROLE_USUARIO') %}
+            <div class = "col s12 m12 l3">
+                <div class = "section" id = "login">
+                    {{ render(controller('AppBundle:Security:cajaLogin' ) ) }}
+                </div>
+            </div>
+        {% endif %}
     </div>
+
 {% endblock %}
