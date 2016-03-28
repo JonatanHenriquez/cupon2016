@@ -4,6 +4,7 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+    use Symfony\Component\Validator\C as Assert;
 
 
     /**
@@ -126,6 +127,8 @@
          * @ORM\ManyToMany(targetEntity="Oferta", mappedBy="usuario")
          */
         private $oferta;
+
+
 
         /**
          * Constructor
@@ -643,5 +646,11 @@
             list (
                 $this->id,
                 ) = unserialize($serialized);
+        }
+
+        public function __toString()
+        {
+            // TODO: Implement __toString() method.
+            return $this->getNombre();
         }
     }

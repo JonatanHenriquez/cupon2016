@@ -67,6 +67,7 @@
 
             //me encuentra aquella oferta segun el id
             $ciudadBuscada = $em->getRepository("AppBundle:Ciudad")->findOneBy(array('ficha' => $ciudad));
+            //aqui cambiar el dateTime por today
             $oferta = $em->getRepository("AppBundle:Oferta")->findOneBy(array('fechaPublicacion' => new \DateTime('2016-02-19'), 'ciudad' => $ciudadBuscada, 'revisada' => 1));
 
 

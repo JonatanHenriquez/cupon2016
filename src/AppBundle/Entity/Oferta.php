@@ -528,4 +528,10 @@ class Oferta
     {
         return $this->usuario;
     }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getNombre();
+    }
 }

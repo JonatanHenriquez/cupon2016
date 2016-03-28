@@ -3,9 +3,8 @@
 security:
 
     encoders:
-          AppBundle\Entity\Usuario:
-              algorithm: bcrypt
-              cost: 12
+          AppBundle\Entity\Usuario: bcrypt
+
 
 
     providers:
@@ -30,7 +29,7 @@ security:
                 default_target_path: compras
             logout:
                 path: /logout
-                target: login
+                target: homepage
             remember_me:
                 secret: cupon1234
                 lifetime: 3600 ##tiempo que permanecera activa la sesion lo normal es un año

@@ -3,7 +3,6 @@
 {% block title %} Portada | Cupon {% endblock %}
 
 {% block body %}
-
     <div class = "row">
         <div {% if is_granted('ROLE_USUARIO') %} class = "col s12 m12 l12" {% else %}class = "col s12 m12 l9" {% endif %} >
             {# verifica si se paso una oferta, es decir si la oferta ha sido revisada #}
@@ -22,6 +21,9 @@
                 </div>
             </div>
         {% endif %}
+
     </div>
 
 {% endblock %}
+
+

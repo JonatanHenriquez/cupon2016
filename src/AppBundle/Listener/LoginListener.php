@@ -18,7 +18,9 @@
     {
         private $router, $ciudad = null;
 
-        //Para que el listener sea capaz de acceder a las rutas
+        //Para que el listener sea capaz de acceder a las rutas y poder reedireccionar a la
+        //pantalla de la portada de la ciudad a la que pertenece el usuario logueado
+        //cosa con el firewall no se puede hacer
         public function __construct(Router $router)
         {
             $this->router = $router;
