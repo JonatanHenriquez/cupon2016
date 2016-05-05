@@ -1,0 +1,273 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ver - Modificar Datos{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function () {
+
+            //select input
+            $('select').material_select();
+
+            // Pikadate datepicker
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 80,// Creates a dropdown of 15 years to control year
+            });
+
+
+            //HACIENDO USO DE MASK
+            $('#tarjeta').mask('0000-0000-0000-0000', {
+                placeholder: "0000-0000-0000-0000"
+            });
+
+            $('#dui').mask('00000000-0', {
+                placeholder: "99999999-9"
+            });
+
+
+            $("#formularioRegistro").validate({
+                rules: {
+                    nombre: "required",
+                    apellidos: "required",
+                    fecha: "required",
+                    dui: "required",
+                    direccion: "required",
+                    tarjeta: "required",
+                    ciudad: "required",
+                    email: {
+                        required: true,
+                        email: true,
+                        checkEmail: true
+
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    }
+                    ,
+                    password_repeat: {
+                        required: true,
+                        minlength: 5,
+                        equalTo: "#password"
+                    }
+                },
+                //For custom messages
+                messages: {
+                    nombre: {
+                        required: "Ingrese su nombre"
+                    }
+                    ,
+                    apellidos: {
+                        required: "Ingrese su apellido"
+                    }
+                    ,
+                    fecha: {
+                        required: "Ingrese su fecha de nacimiento"
+                    }
+                    ,
+                    password: {
+                        required: "Ingrese una contraseña",
+                        minlength: "Debe de contener al menos 5 digitos"
+                    }
+                    ,
+                    password_repeat: {
+                        required: "Ingrese nuevamente su contraseña",
+                        minlength: "Debe de contener al menos 5 digitos",
+                        equalTo: "Ingrese la misma contraseña que sea igual que la anterior"
+                    }
+                    ,
+                    email: {
+                        required: "Ingrese su cuenta de correo",
+                        email: "Ingrese un dominio valido: johndoe@dominio.com",
+                        checkEmail: 'Correo ya en uso. Ingrese un email diferente'
+                    }
+                    ,
+                    tarjeta: {
+                        required: "Ingrese su tarjeta"
+                    }
+                    ,
+                    ciudad: {
+                        required: "Ingrese su ciudad"
+                    }
+                }
+                ,
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+
+            })
+            ;
+
+        });
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <div id = "register-page" class = "row" style = "margin-top: 20px">
+        <div class = "col s12 z-depth-4 card-panel orange accent-1">
+            <form class = "col s12 formularioRegistro" id = "formularioRegistro" name = "formularioRegistro"
+                  action = "{{ path('perfilUsuario') }}" method = "post">
+
+                <div class = "row">
+                    <div class = "col s12">
+                        <div class = "input-field s12 center">
+                            <h5 class = "center blue-text">Consultar o Modificar Datos</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "row">
+                    <div class = "col l6 s12">
+                        <fieldset>
+                            <legend>Datos Personales</legend>
+                            <div class = "row ">
+
+                                <div class = "input-field col s6">
+                                    <i class = "mdi-social-person-outline prefix"></i>
+                                    <input type = "text" id = "nombre" name = "nombre" value = "{{ usuario.nombre }}">
+                                    <label for = "nombre">Nombre</label>
+                                </div>
+
+                                <div class = "input-field col s6">
+                                    <input type = "text" id = "apellidos" name = "apellidos"
+                                           value = "{{ usuario.apellidos }}">
+                                    <label for = "apellidos">Apellido</label>
+                                </div>
+                            </div>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">cake</i>
+                                    <input type = "text" id = "fecha" name = "fecha" class = "datepicker"
+                                           value = "{{ usuario.fechaNacimiento.format('d F, Y') }}">
+                                    {# se le brinda formato de string a la fecha para poder ser pintada #}
+                                    <label for = "fecha">Fecha de Nacimiento</label>
+                                </div>
+                            </div>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">credit_card</i>
+                                    <input type = "text" id = "dui" name = "dui" value = "{{ usuario.dui }}">
+                                    <label for = "dui">Dui</label>
+                                </div>
+                            </div>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">home</i>
+                                    <input type = "text" id = "direccion" name = "direccion"
+                                           class = "materialize-textarea" value = "{{ usuario.direccion }}">
+                                    <label for = "direccion">Direccion</label>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <div class = "col l6 s12">
+                        <fieldset>
+                            <legend>Datos de Acceso</legend>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">email</i>
+                                    <input type = "text" id = "email" name = "email" value = "{{ usuario.email }}">
+                                    <label for = "email">Correo</label>
+                                </div>
+                            </div>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">lock</i>
+                                    <input type = "password" id = "password" name = "password">
+                                    <label for = "password">Contraseña</label>
+                                </div>
+                            </div>
+
+                            <div class = "row ">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">lock</i>
+                                    <input type = "password" id = "password_repeat" name = "password_repeat">
+                                    <label for = "password_repeat">Repita contraseña</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class = "row">
+                    <div class = "col l12 s12">
+                        <fieldset>
+                            <legend>Datos Economicos</legend>
+                            <div class = "row">
+                                <div class = "input-field col l6 s12">
+                                    <i class = "material-icons prefix">credit_card</i>
+                                    <input type = "text" id = "tarjeta" name = "tarjeta"
+                                           value = "{{ usuario.numeroTarjeta }}">
+                                    <label for = "tarjeta">Numero de Tarjeta</label>
+                                </div>
+
+                                <div class = "input-field col l6 s12">
+                                    <select id = "ciudad" name = "ciudad">
+                                        <option value = "" disabled selected>Selecciona una opcion</option>
+                                        {% for ciudad in ciudades %}
+                                            {#
+                                            Para determinar que ciudad es la que posee el usuario y dejarla seleccionada
+                                            Si no son iguales es que no pertenece a esa ciudad y solo las coloca en el
+                                            select.
+                                            Pero si son iguales los id la selecciona y esa es la que se mostrara en el
+                                            select
+                                            #}
+                                            {% if ciudad.id != usuario.ciudad.id %}
+                                                <option value = "{{ ciudad.id }}">{{ ciudad.nombre }} </option>
+                                            {% else %}
+                                                <option value = "{{ ciudad.id }}" selected>{{ ciudad.nombre }} </option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <label>Seleccione su ciudad</label>
+                                </div>
+                            </div>
+
+                            <div class = "row center">
+                                <div class = " col s12 l12">
+                                    <input type = "checkbox" id = "usuario_permite_email" name = "usuario_permite_email">
+                                    <label for = "usuario_permite_email">Permite Email</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </div>
+
+                <div class = "center" style = "margin-bottom: 1rem">
+                    <button class = "btn waves-effect waves-light" type = "submit" name = "action"><i
+                                class = "material-icons right">send</i>Modificar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
+
+{% block lobibox %}
+    {% for mensaje in app.session.flashbag.get('exito') %}
+        <script>
+            notificacion('{{ mensaje.titulo }}', '{{ mensaje.contenido }}','{{ mensaje.tipo }}');
+        </script>
+    {% endfor %}
+{% endblock %}
