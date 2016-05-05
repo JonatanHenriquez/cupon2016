@@ -35,10 +35,10 @@ $(function() {
   // Check Uncheck function
   function checkbox_check(el){
       if (!$(el).is(':checked')) {
-          $(el).next().css('text-decoration', 'none'); // or addClass            
+          $(el).next().css('text-decoration', 'none'); // or addClass
       } else {
           $(el).next().css('text-decoration', 'line-through'); //or addClass
-      }    
+      }
   }
 
   /*----------------------
@@ -99,7 +99,7 @@ $(function() {
   // Pikadate datepicker
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
+    selectYears: 80,// Creates a dropdown of 15 years to control year
   });
 
   // Perfect Scrollbar

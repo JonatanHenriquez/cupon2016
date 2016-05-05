@@ -14,7 +14,7 @@ services:
       tags:
           - { name: twig.extension }
 
-  # Servicio para redirigir al usuario a la portada de su ciudad,ya que con el firewall no lo podia hacer
+  # Servicio para redirigir al usuario a la portada de su ciudad,ya que con el firewall no su pouede hacer
   login_listener:
       class: AppBundle\Listener\LoginListener
       # Acceder al enrutamiento de la app

@@ -1,17 +1,17 @@
 function notificacion(titulo, contenido, tipo) {
-    Lobibox.notify(
-        'sucess',  // Available types 'warning', 'info', 'success', 'error'
+    Lobibox.notify(tipo,  // Available types 'warning', 'info', 'success', 'error'
         {
-            soundPath: 'web/lolibox/sounds/',
+            title: titulo,
+            //soundPath: '{{ asset('libs/lolibox/sounds') }}',
             sound: true,
             msg: contenido,
             delayIndicator: false,
-            img: 'web/images/done.svg',
+            showClass: 'zoomIn',
+            hideClass: 'zoomOut'
+        });
 
-
-        }
-    );
 }
+
 
 function enviarFormulario(idForm, _url) {
     //var fd = new FormData(document.getElementById(idForm));

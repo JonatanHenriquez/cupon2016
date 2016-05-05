@@ -4,9 +4,75 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc4d641fb15504a83ea878e1dd4a592b",
-    "content-hash": "d1f5cd252fc543d8f552959c2f2c4c49",
+    "hash": "f93db5230b911e24af14aeff906c9074",
+    "content-hash": "9343cabc4cb1dcaf2492a9be74de6776",
     "packages": [
+        {
+            "name": "boekkooi/jquery-validation-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/boekkooi/JqueryValidationBundle.git",
+                "reference": "7a54dafc737a78c48cb6a88c49727ae90a316e5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/boekkooi/JqueryValidationBundle/zipball/7a54dafc737a78c48cb6a88c49727ae90a316e5f",
+                "reference": "7a54dafc737a78c48cb6a88c49727ae90a316e5f",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "~1.0",
+                "php": ">=5.5",
+                "symfony/dependency-injection": "~2.3|~3.0",
+                "symfony/form": "~2.3, >=2.3.5|~3.0",
+                "symfony/framework-bundle": "~2.3|~3.0",
+                "symfony/twig-bridge": "~2.3|~3.0",
+                "symfony/twig-bundle": "~2.3|~3.0",
+                "symfony/validator": "~2.3|~3.0",
+                "twig/twig": "~1.14, >=1.14.2"
+            },
+            "require-dev": {
+                "behat/behat": "~3.0",
+                "behat/mink": "~1.6",
+                "behat/mink-extension": "~2.0",
+                "behat/mink-selenium2-driver": "~1.1",
+                "behat/symfony2-extension": "~2.0",
+                "phpunit/phpunit": "~4.7@stable",
+                "symfony/browser-kit": "~2.3|~3.0",
+                "symfony/css-selector": "~2.3|~3.0",
+                "symfony/dom-crawler": "~2.3|~3.0",
+                "symfony/finder": "~2.3|~3.0",
+                "symfony/phpunit-bridge": "~2.7@stable",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Boekkooi\\Bundle\\JqueryValidationBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Warnar Boekkooi",
+                    "email": "warnar@boekkooi.net"
+                }
+            ],
+            "description": "Jquery form validation bundle for symfony 2",
+            "keywords": [
+                "form",
+                "jquery",
+                "symfony",
+                "twig",
+                "validation",
+                "validator"
+            ],
+            "time": "2016-03-30 10:01:58"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -1943,7 +2009,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/855dc0e829fad123966347612b4183e307338c11",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/9562f8291b98bcd4abd4959ab74f35191d7b34b5",
                 "reference": "855dc0e829fad123966347612b4183e307338c11",
                 "shasum": ""
             },
@@ -1991,7 +2057,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "boekkooi/jquery-validation-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

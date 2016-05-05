@@ -21,6 +21,7 @@
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -54,10 +55,14 @@
 
                 //es falso ya que no obliga al usuario aceptar boletines de noticias
                 ->add('permite_email', CheckboxType::class, array('required' => false))
-                //->add('fecha_nacimiento', DateType::class, array(
-                  //  'widget' => 'single_text',
-                    //'format' => 'dd-MMMM-yyyy'
-                //))
+
+                //fecha de nacimiento
+                ->add('fecha_nacimiento', DateType::class, array(
+                    'widget' => 'single_text',
+                    //hice que el formato coincidiera con el formato que maneja las fechas materialize
+                    'format' => 'd MMMM, yyyy'
+                ))
+
                 ->add('dui')
                 ->add('numeroTarjeta')
                 ->add('ciudad', EntityType::class, array(

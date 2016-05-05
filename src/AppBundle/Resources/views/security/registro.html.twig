@@ -1,5 +1,4 @@
-{% extends 'AppBundle:security:login.html.twig' %}
-{% block title %}Registro de Usuario {% endblock %}
+{% block title %}<title>Registro de Usuario</title> {% endblock %}
 
 {% block librerias %}
     <link type = "text/css" rel = "stylesheet" href = "{{ asset('libs/materialize/css/materialize.css') }}"
@@ -13,22 +12,37 @@
 
     <link type = "text/css" rel = "stylesheet" href = "{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
     <script src = "{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+
+    <script type = "text/javascript" src = "{{ asset('libs/materialize/js/jquery.js') }}"></script>
+    <!--materialize js-->
+    <script type = "text/javascript" src = "{{ asset('libs/materialize/js/materialize.js') }}"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type = "text/javascript" src = "{{ asset('libs/materialize_admin/js/plugins.js') }}"></script>
+
+
+    <script type = "text/javascript" src = "{{ asset('libs/validation/jquery.validate.js') }}"></script>
+    <script type = "text/javascript" src = "{{ asset('libs/validation/additional-methods.js') }}"></script>
+
 {% endblock %}
 
 {% block body %}
     <body class = "cyan">
     <div id = "register-page" class = "row">
         <div class = "col s12 z-depth-4 card-panel">
-            <form class = "login-form col s12" action = "{{ path('registro') }}" method = "post">
+            <form class = "col s12 usuario" id = "usuario" name = "usuario" action = "{{ path('registro') }}"
+                  method = "post">
 
-                {{ form_errors(formulario) }}
-
-                <div class = "row col s12">
-                    <div class = "input-field col s12 center">
-                        <h4>Registrate</h4>
-                        <p class = "center">¡Unete a nuestra pagina!</p>
+                <div class = "row">
+                    <div class = "col s12">
+                        <div class = "center">
+                            <h4 class="center red-text">Registrate</h4>
+                            <h5 class = "center blue-text">¡Unete a nuestra pagina!</h5>
+                        </div>
                     </div>
+                </div>
 
+                <div class = "row">
                     <div class = "col l6 s12">
                         <fieldset>
                             <legend>Datos Personales</legend>
@@ -37,20 +51,22 @@
                                     <i class = "mdi-social-person-outline prefix"></i>
                                     {{ form_label(formulario.nombre, null, {'label_attr': {'class': 'center-align'}}) }}
                                     {{ form_widget(formulario.nombre) }}
+                                    <div class = "error">{{ form_errors(formulario.nombre) }}</div>
                                 </div>
+
                                 <div class = "input-field col s6">
                                     {{ form_label(formulario.apellidos, null, {'label_attr': {'class': 'center-align'}}) }}
                                     {{ form_widget(formulario.apellidos) }}
                                 </div>
                             </div>
 
-                            <!--<div class = "row margin">
-                            <div class = "input-field col s12">
-                                <i class = "material-icons prefix">cake</i>
-                                {#{{ form_label(formulario.fecha_nacimiento, null, {'label_attr': {'class': 'center-align active'}}) }}#}
-                                {#{{ form_widget(formulario.fecha_nacimiento, { 'attr': {'class': 'datepicker'} } ) }}#}
+                            <div class = "row margin">
+                                <div class = "input-field col s12">
+                                    <i class = "material-icons prefix">cake</i>
+                                    {{ form_label(formulario.fecha_nacimiento, null, {'label_attr': {'class': 'center-align active'}}) }}
+                                    {{ form_widget(formulario.fecha_nacimiento, { 'attr': {'class': 'datepicker'} } ) }}
+                                </div>
                             </div>
-                        </div>-->
 
                             <div class = "row margin">
                                 <div class = "input-field col s12">
@@ -71,7 +87,7 @@
                         </fieldset>
                     </div>
 
-                    <div class = "col l6 s12" style = "padding: 2% 0 0% 0">
+                    <div class = "col l6 s12" >
                         <fieldset>
                             <legend>Datos de Acceso</legend>
 
@@ -88,14 +104,14 @@
                                     <i class = "material-icons prefix">lock</i>
                                     {{ form_label(formulario.password.first, null, {'label_attr': {'class': 'center-align'}}) }}
                                     {{ form_errors(formulario.password) }}
-                                    {{ form_widget(formulario.password.first) }}
+                                    {{ form_widget(formulario.password.first ) }}
                                 </div>
 
                                 <div class = "input-field col s12">
                                     <i class = "material-icons prefix">lock</i>
                                     {{ form_label(formulario.password.second, null, {'label_attr': {'class': 'center-align'}}) }}
                                     {{ form_errors(formulario.password) }}
-                                    {{ form_widget(formulario.password.second) }}
+                                    {{ form_widget(formulario.password.second ) }}
                                 </div>
                             </div>
                         </fieldset>
@@ -120,11 +136,11 @@
                             </div>
 
                             <div class = "row center">
-                                <div class = "col s12 l12">
+                                <div class = "input-field col s12 l12">
 
                                     {{ form_widget(formulario.permite_email) }}
                                     {#Obtengo el id de la variable que deseo ver en http://symfony.com/doc/current/reference/forms/twig_reference.html#}
-                                    <label for = "{{ formulario.permite_email.vars.id }}">{{ form_label(formulario.permite_email) }}</label>
+                                    {{ form_label(formulario.permite_email) }}
 
                                 </div>
 
@@ -140,45 +156,13 @@
                     <button class = "btn waves-effect waves-light" type = "submit" name = "action">Submit</button>
                 </div>
             </form>
-
         </div>
-
     </div>
 
-    {% for mensaje in app.session.flashbag.get('noticia') %}
-        <script>
-            notificacion('{{ mensaje.titulo }}', '{{ mensaje.contenido }}');
-        </script>
-    {% endfor %}
-
     </body>
 
-    <!--<form action = "{{ path('registro') }}" method = "post">
-        {#{{ form_errors(formulario) }}#}
-        {#{{ form_widget(formulario) }}#}
 
-        {# esto es lo necesario para presentar cualquier formulario solo es de agregar el boton #}
-        <button title = "submit">Registrarme</button>
-    </form>->
-    </body>
-
-    <!-- jQuery Library -->
-    <script type = "text/javascript" src = "{{ asset('libs/materialize/js/jquery-2.1.3.min.js') }}"></script>
-    <!--materialize js-->
-    <script type = "text/javascript" src = "{{ asset('libs/materialize/js/materialize.min.js') }}"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type = "text/javascript" src = "{{ asset('libs/materialize_admin/js/plugins.js') }}"></script>
 
 {% endblock %}
 
-{% block javascript %}
-
-    {% for mensaje in app.session.flashbag.get('noticia') %}
-        <script>
-            notificacion('{{ mensaje.titulo }}', '{{ mensaje.contenido }}','{{ mensaje.tipo }}');
-        </script>
-    {% endfor %}
-
-{% endblock %}
 

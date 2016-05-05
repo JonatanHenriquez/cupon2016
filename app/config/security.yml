@@ -3,9 +3,8 @@
 security:
 
     encoders:
-          AppBundle\Entity\Usuario: bcrypt
-
-
+          AppBundle\Entity\Usuario:
+              algorithm: bcrypt
 
     providers:
         users_db:
@@ -33,7 +32,6 @@ security:
             remember_me:
                 secret: cupon1234
                 lifetime: 3600 ##tiempo que permanecera activa la sesion lo normal es un año
-
 
     access_control:
         - { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

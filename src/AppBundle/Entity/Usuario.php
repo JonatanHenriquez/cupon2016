@@ -4,7 +4,9 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-    use Symfony\Component\Validator\C as Assert;
+    //para validar que solo exista un correo igual y validar su forma
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
     /**
@@ -12,6 +14,7 @@
      *
      * @ORM\Table(name="usuario", indexes={@ORM\Index(name="ciudad_idx", columns={"ciudad_id"}), @ORM\Index(name="rol_idx", columns={"rol"})})
      * @ORM\Entity
+     *
      */
     class Usuario implements AdvancedUserInterface , \Serializable
     {
@@ -28,6 +31,7 @@
          * @var string
          *
          * @ORM\Column(name="nombre", type="string", length=100, nullable=true)
+         *
          */
         private $nombre;
 
@@ -35,6 +39,7 @@
          * @var string
          *
          * @ORM\Column(name="apellidos", type="string", length=255, nullable=true)
+         *
          */
         private $apellidos;
 
@@ -42,12 +47,12 @@
          * @var string
          *
          * @ORM\Column(name="email", type="string", length=255, nullable=true)
+         * @Assert\Email()
          */
         private $email;
 
         /**
          * @var string
-         *
          * @ORM\Column(name="password", type="string", length=255, nullable=true)
          */
         private $password;
@@ -593,6 +598,7 @@
         public function getSalt()
         {
             // TODO: Implement getSalt() method.
+
         }
 
         /**

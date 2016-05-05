@@ -23,7 +23,27 @@
         {% endif %}
 
     </div>
+{% endblock %}
 
+
+{% block lobibox %}
+    {% for mensaje in app.session.flashbag.get('exito') %}
+        <script>
+            {#
+            $.notify({
+                title: 'Email Notification',
+                text: 'You received an e-mail from your boss. You should read it right now!',
+                image: '<i class="fa fa-camera-retro fa-2x"></i>'
+            }, {
+                style: 'metro',
+                className: 'success',
+                autoHide: true,
+                clickToHide: false,
+                globalPosition: 'bottom right',
+            });#}
+            notificacion('{{ mensaje.titulo }}', '{{ mensaje.contenido }}','{{ mensaje.tipo }}');
+        </script>
+    {% endfor %}
 {% endblock %}
 
 

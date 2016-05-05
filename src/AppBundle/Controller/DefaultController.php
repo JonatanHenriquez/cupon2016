@@ -17,9 +17,10 @@
          */
         public function portadaAction()
         {
+
             //Me mostrara la oferta del dia en caso de que sea un usuario normal la de la ciudad por defecto en caso
             //de que sea uno loguedo se mostrara la de su ciudad, segun la fecha actual
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             //en este caso se tomara como la ciudad por defecto la que posea id 1 que esta en el config.yml
            $oferta = $em -> getRepository("AppBundle:Oferta")->findOneBy(array("fechaPublicacion" => new \DateTime('2016-02-21'), "ciudad" => $this->container->getParameter('cupon.ciudad_por_defecto'), 'revisada' => 1));
@@ -42,9 +43,6 @@
                 throw  $this->createNotFoundException('No se ha encontrado la oferta del dia en la ciudad seleccionada');
             }
             */
-
-
-
             return $this->render("AppBundle:default:portada.html.twig" , array('oferta' => $oferta));
 
         }
@@ -56,7 +54,7 @@
         public function portadaCiudadAction($ciudad = null)
         {
             //es el objeto que me permite acceder a la base de datos
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             //findAll me da todos los registros de la tabla
             //findBy me permite hacer consultas mas complejas y me da muchos resultados

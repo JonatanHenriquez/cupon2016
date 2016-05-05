@@ -3,7 +3,7 @@
 <head>
     <meta charset = "UTF-8"/>
     <title>{% block title %}{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
+
     <link rel = "icon" type = "image/x-icon" href = "{{ asset('favicon.ico') }}"/>
 
     {% block librerias %}
@@ -17,8 +17,9 @@
               media = "screen,projection">
 
 
+
         <!--Import jQuery before materialize.js-->
-        <script type = "text/javascript" src = "{{ asset('libs/materialize/js/jquery-2.1.3.min.js') }}"></script>
+        <script type = "text/javascript" src = "{{ asset('libs/materialize/js/jquery.js') }}"></script>
         <script type = "text/javascript" src = "{{ asset('libs/materialize/js/materialize.js') }}"></script>
 
         <!--Iconos -->
@@ -30,12 +31,31 @@
         <!--Contador-->
         <script src = "{{ asset('libs/countdown/jquery.countdown.min.js') }}"></script>
 
+        <link rel = "stylesheet" href = "{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+        <script src = "{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+
+        <script src = "{{ asset('libs/utils/utils.js') }}"></script>
+
+        <!--jquery validation !-->
+        <script src = "{{ asset('libs/validation/jquery.validate.js') }}"></script>
+        <script src = "{{ asset('libs/validation/additional-methods.js') }}"></script>
+        <script src = "{{ asset('libs/validation/localization/messages_es.js') }}"></script>
+
+        <!--mask-->
+        <script src = "{{ asset('libs/mask/jquery.mask.js') }}"></script>
 
     {% endblock %}
+
+    {% block jquery %} {% endblock %}
 </head>
 
 <body>
-{#Para determinar que ciudad es la que se encuentra el usuario y de acuerdo a eso pasarla en la ruta de oferta del dia#}
+
+{#Para determinar que ciudad es la que se encuentra el usuario
+ y de acuerdo a eso pasarla en la ruta de OFERTA DEL DIA
+ si la url no lleva una ciudad se mostrara las ofertas del dia de la ciudad por defecto
+ MADRID si no a la q pertenece el usuario
+ #}
 {% set ciudadSeleccionada =  app.request.attributes.has('ciudad')? app.request.attributes.get('ciudad') : 'madrid' %}
 
 {% block header %}
@@ -48,7 +68,6 @@
 
         {{ render(controller('AppBundle:Ciudad:listaCiudades',{ 'ciudad' : ciudadSeleccionada } ) ) }}
         #}
-
         {{ render(controller('AppBundle:Ciudad:listaCiudades' ) ) }}
         <!--TopNav o AppBar-->
 
@@ -58,19 +77,24 @@
                     <div class = "container">
                         <a class = "brand-logo" href = "{{ path('homepage') }}">Cupon</a>
                         <ul class = "right hide-on-med-and-down hide-on-small-and-down">
-                            <li><a  href = "{{ path('homepage') }}" >Oferta del
+                            <li><a href = "{{ path('homepage') }}">Oferta del
                                     dia</a></li>
-                            <li><a href = "{{ path('recientes', {'ciudad': ciudadSeleccionada}) }}">Ofertas Recientes</a></li>
-                            <li><a href = "{{ path('compras') }}">Mis
-                                    Ofertas</a></li>
-                            <li><a class = "dropdown-button tooltipped" data-position = "bottom" data-delay = "50"
+                            {# Se hace uso del valor que almacena ciudadSeleccionada de acuerdo al valor que posee la  URL#}
+                            <li><a href = "{{ path('recientes', {'ciudad': ciudadSeleccionada}) }}">Ofertas
+                                    Recientes</a></li>
+                            <li><a href = "{{ path('compras') }}">Mis Ofertas</a></li>
+                            <li><a class = "dropdown-button tooltipped " data-position = "bottom" data-delay = "50"
                                    data-tooltip = "Ofertas del dia en otras ciudades" href = "#!"
                                    data-activates = "dropdown">Seleccione una ciudad<i class = "material-icons right">arrow_drop_down</i></a>
                             </li>
                             {% if is_granted('ROLE_USUARIO') %}
                                 <li><a class = "dropdown-buttonUsuario" data-position = "bottom" data-delay = "50"
-                                       href = "#!"
-                                       data-activates = "dropdownUsuario"><i class = "material-icons left">account_circle</i>{{ app.user.nombre ~ ' ' ~ app.user.apellidos }}
+                                       href = "#!" data-activates = "dropdownUsuario">
+                                        <i class = "material-icons left">account_circle</i>
+
+                                        {# Obtengo el nombre del usuario sin colocar el token en el contralador #}
+                                         {{ app.user.nombre ~ ' ' ~ app.user.apellidos }}
+
                                     </a>
                                 </li>
 
@@ -86,25 +110,30 @@
                             <li><a href = "#"><i class = "material-icons left">add_shopping_cart</i>Mis Ofertas</a></li>
 
                             {% if is_granted('ROLE_USUARIO') or is_granted('ROLE_ADMINISTRADOR') %}
-                            <li class="no-padding">
-                                <ul class="collapsible collapsible-accordion">
-                                    <li>
-                                        <a class="collapsible-header waves-effect waves-teal"><i class="material-icons left">account_circle</i>{{ app.user.nombre ~ ' ' ~ app.user.apellidos }}</a>
-                                        <div class="collapsible-body">
-                                            <ul>
-                                                <li><a href="#!" style="background-color: transparent">Ver mi Perfil</a></li>
-                                                <li><a href="{{ path('logout') }}" style="background-color: transparent">Cerrar Sesion</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class = "no-padding">
+                                    <ul class = "collapsible collapsible-accordion">
+                                        <li>
+                                            <a class = "collapsible-header waves-effect waves-teal"><i
+                                                        class = "material-icons left">account_circle</i>{{ app.user.nombre ~ ' ' ~ app.user.apellidos }}
+                                            </a>
+                                            <div class = "collapsible-body">
+                                                <ul>
+                                                    <li><a href = "{{ path('perfilUsuario') }}" style = "background-color: transparent">Ver mi
+                                                            Perfil</a></li>
+                                                    <li><a href = "{{ path('logout') }}"
+                                                           style = "background-color: transparent">Cerrar Sesion</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
                             {% endif %}
 
                         </ul>
 
                         <ul id = "dropdownUsuario" class = "dropdown-content">
-                            <li><a href = "#">Ver mi perfil</a></li>
+                            <li><a href = "{{ path('perfilUsuario') }}">Ver mi perfil</a></li>
                             <li><a href = "{{ path('logout') }}">Cerrar Sesion</a></li>
                         </ul>
                     </div>
@@ -184,5 +213,6 @@
 
 {% endblock %}
 
+{% block lobibox %}{% endblock %}
 </body>
 </html>

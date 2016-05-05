@@ -39,7 +39,7 @@ class CiudadController extends Controller
     public function listaCiudadesAction()
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         //obtengo todas las ciudades y las renderizo en un select
         $ciudades = $em->getRepository("AppBundle:Ciudad")->findAll();
@@ -52,7 +52,7 @@ class CiudadController extends Controller
      */
     public function recientesAction($ciudad){
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         //obtengo las ofertas mas recientes de esa ciudad
         $query = "SELECT o,c,t FROM AppBundle:Oferta o JOIN o.ciudad c JOIN o.tienda t WHERE o.fechaPublicacion <= :fecha AND c.ficha = :ciudad AND o.revisada = 1 ORDER BY o.fechaPublicacion ASC";
